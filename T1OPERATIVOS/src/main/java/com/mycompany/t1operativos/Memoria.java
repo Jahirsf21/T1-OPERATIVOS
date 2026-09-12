@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class Memoria {
     private String[][] memoria;
+    private BCP[] bcps;
     private int tamañoTotal;
     private int tamañoKernel;
     private int inicioUsuario;
@@ -35,7 +36,44 @@ public class Memoria {
         this.tamañoKernel = tamañoKernel;
         this.inicioUsuario = tamañoKernel;
         this.memoria = new String[tamañoTotal][];
+        this.bcps = new BCP[tamañoKernel];
         this.cantidadInstrucciones = 0;
+    }
+
+    /**
+     * Guarda un bloque de control de proceso en la primera posición disponible
+     * del espacio reservado para el kernel.
+     *
+     * @param bcp bloque de control de proceso que se desea almacenar.
+     * @return la posición del kernel donde se almacenó el BCP.
+     * @throws IllegalArgumentException si el BCP es {@code null}.
+     * @throws IllegalStateException si no queda espacio para almacenar otro BCP.
+     */
+    public int guardarBCP(BCP bcp) {
+        if (bcp == null) {
+            throw new IllegalArgumentException("El BCP no puede ser nulo.");
+        }
+        for (int i = 0; i < bcps.length; i++) {
+            if (bcps[i] == null) {
+                bcps[i] = bcp;
+                return i;
+            }
+        }
+        throw new IllegalStateException("No hay espacio disponible en el Kernel para almacenar el BCP");
+    }
+
+    /**
+     * Lee el bloque de control de proceso almacenado en una posición del kernel.
+     *
+     * @param posicion posición del kernel que se desea consultar.
+     * @return el BCP almacenado, o {@code null} si la posición está vacía.
+     * @throws IndexOutOfBoundsException si la posición no pertenece al espacio reservado para el kernel.
+     */
+    public BCP leerBCP(int posicion) {
+        if (posicion < 0 || posicion >= tamañoKernel) {
+            throw new IndexOutOfBoundsException("Posición invaálida del kernel: " + posicion);
+        }
+        return bcps[posicion];
     }
 
     /**
@@ -73,7 +111,7 @@ public class Memoria {
      * Escribe un valor en una posición perteneciente al espacio de usuario.
      *
      * @param posicion dirección de memoria donde se desea escribir.
-     * @param valor valor que se desea almacenar.
+     * @param instruccion instrucción que se desea almacenar.
      * @throws IndexOutOfBoundsException si la posición está fuera de la memoria.
      * @throws IllegalArgumentException si la posición pertenece al espacio reservado para el kernel.
      */

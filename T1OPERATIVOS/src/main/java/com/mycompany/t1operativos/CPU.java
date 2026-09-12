@@ -211,7 +211,7 @@ public class CPU {
 
     /** @return la instrucción almacenada en el registro de instrucción (IR). */
     public String[] getIr() {
-        return ir;
+        return ir.clone();
     }
 
     /** @return el valor actual del acumulador (AC). */
