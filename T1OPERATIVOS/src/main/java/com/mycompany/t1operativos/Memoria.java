@@ -32,6 +32,7 @@ public class Memoria {
             throw new IllegalArgumentException("El tamaño reservado para el kernel no es válido.");
         }
         this.tamañoTotal = tamañoTotal;
+        this.tamañoKernel = tamañoKernel;
         this.inicioUsuario = tamañoKernel;
         this.memoria = new String[tamañoTotal][];
         this.cantidadInstrucciones = 0;
