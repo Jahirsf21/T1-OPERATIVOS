@@ -14,20 +14,22 @@ import java.util.List;
  */
 public class CargadorArchivos {
     private Parser parser;
+    private List<String> errores;
 
     public CargadorArchivos() {
         this.parser = new Parser();
+        this.errores = new ArrayList<>();
     }
 
     /**
      * Lee y procesa las instrucciones de un archivo ensamblador. Las líneas
-     * vacías se omiten y el procesamiento se detiene si alguna instrucción no
-     * cumple con el formato esperado.
+     * vacías se omiten. Las líneas inválidas no se incluyen en el resultado y
+     * sus errores quedan disponibles mediante {@link #getErrores()}.
      *
      * @param rutaArchivo ruta del archivo {@code .asm} que se desea cargar.
      * @return una lista con las instrucciones procesadas; cada arreglo contiene el operador, el registro y el valor.
      * @throws IOException si ocurre un error al abrir o leer el archivo.
-     * @throws IllegalArgumentException si la ruta es inválida, el archivo no tiene extensión {@code .asm}, contiene una instrucción inválida o no contiene instrucciones.
+     * @throws IllegalArgumentException si la ruta es inválida, el archivo no tiene extensión {@code .asm} o no contiene instrucciones válidas.
      */
     public List<String[]> cargarArchivo(String rutaArchivo) throws IOException {
         if (rutaArchivo == null || rutaArchivo.trim().isEmpty()) {
@@ -36,6 +38,7 @@ public class CargadorArchivos {
         if (!rutaArchivo.toLowerCase().endsWith(".asm")) {
             throw new IllegalArgumentException("El archivo debe tener extensión .asm");
         }
+        errores.clear();
         List<String[]> instrucciones = new ArrayList<>();
         try (BufferedReader lector = new BufferedReader(new FileReader(rutaArchivo))) {
             String linea;
@@ -47,7 +50,8 @@ public class CargadorArchivos {
                 }
                 ResultadoParser resultado = parser.procesarInstruccion(linea);
                 if (!resultado.esValido()) {
-                    throw new IllegalArgumentException("Error en la línea " + numeroLinea + ": " + resultado.getMensajeError());
+                    errores.add("Línea " + numeroLinea + ": " + resultado.getMensajeError());
+                    continue;
                 }
                 instrucciones.add(resultado.getInstruccion());
             }
@@ -56,5 +60,15 @@ public class CargadorArchivos {
             throw new IllegalArgumentException("El archivo no contiene instrucciones.");
         }
         return instrucciones;
+    }
+
+    /**
+     * Obtiene los errores encontrados durante la última carga del archivo.
+     *
+     * @return una copia de la lista de errores, con su correspondiente número
+     *     de línea.
+     */
+    public List<String> getErrores() {
+        return new ArrayList<>(errores);
     }
 }

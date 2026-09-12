@@ -211,6 +211,9 @@ public class CPU {
 
     /** @return la instrucción almacenada en el registro de instrucción (IR). */
     public String[] getIr() {
+        if (ir == null) {
+            return null;
+        }
         return ir.clone();
     }
 
