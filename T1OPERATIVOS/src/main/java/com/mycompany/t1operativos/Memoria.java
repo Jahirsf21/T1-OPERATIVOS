@@ -76,12 +76,12 @@ public class Memoria {
      * @throws IndexOutOfBoundsException si la posición está fuera de la memoria.
      * @throws IllegalArgumentException si la posición pertenece al espacio reservado para el kernel.
      */
-    public void escribirUsuario(int posicion, String valor) {
+    public void escribirUsuario(int posicion, String[] instruccion) {
         validarDireccion(posicion);
         if (posicion < inicioUsuario) {
             throw new IllegalArgumentException("No se puede escribir en el espacio reservado para el Kernel.");
         }
-        memoria[posicion] = valor;
+        memoria[posicion] = instruccion;
     }
 
     /**
