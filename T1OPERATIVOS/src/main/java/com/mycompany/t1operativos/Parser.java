@@ -284,4 +284,23 @@ public class Parser {
         String resultado = operador + " " + registro + " " + valor;
         return resultado;
     }
+
+    /**
+     * Traduce una instrucción procesada a su representación en ensamblador.
+     *
+     * @param instruccion arreglo con el operador, el registro y el valor.
+     * @return la instrucción en ensamblador con sus campos separados por espacios.
+     */
+    public String traducirInstruccion(String[] instruccion) {
+        if (instruccion == null) {
+            return "";
+        }
+        String operador = instruccion[0];
+        String registro = instruccion[1];
+        if ("MOV".equals(operador)) {
+            String valor = instruccion[2];
+            return operador + " " + registro + ", " + valor;
+        }
+        return operador + " " + registro;
+    }
 }
