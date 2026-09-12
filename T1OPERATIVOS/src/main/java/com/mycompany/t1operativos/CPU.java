@@ -11,6 +11,7 @@ package com.mycompany.t1operativos;
  */
 public class CPU {
     private Memoria memoria;
+    private Parser parser;
     private int pc;
     private String[] ir;
     private int ac;
@@ -24,12 +25,14 @@ public class CPU {
      * registros en cero.
      *
      * @param memoria memoria de la que se obtendrán las instrucciones.
+     * @param parser parser utilizado para dar formato legible a las instrucciones
      * @throws IllegalArgumentException si la memoria es {@code null}.
      */
-    public CPU(Memoria memoria) {
+    public CPU(Memoria memoria, Parser parser) {
         if (memoria == null) {
             throw new IllegalArgumentException("La memoria no puede ser nula.");
         }
+        this.parser = parser;
         this.memoria = memoria;
         reiniciar();
     }
@@ -189,13 +192,7 @@ public class CPU {
      *     una instrucción cargada.
      */
     public String getIrToString() {
-        if (ir == null) {
-            return "";
-        }
-        if ("MOV".equals(ir[0])) {
-            return ir[0] + " " + ir[1] + ", " + ir[2];
-        }
-        return ir[0] + " " + ir[1];
+        return parser.traducirInstruccion(ir);
     }
 
     /** @return el valor actual del contador de programa (PC). */

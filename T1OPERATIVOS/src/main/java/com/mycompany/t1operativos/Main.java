@@ -4,13 +4,21 @@
 
 package com.mycompany.t1operativos;
 
+import com.mycompany.t1operativos.gui.Aplicacion;
+
 /**
+ * Inicia la interfaz gráfica de la Mini PC.
  *
  * @author deisl
  */
 public class Main {
 
+    /**
+     * Punto de entrada de la aplicación.
+     *
+     * @param args argumentos de línea de comandos.
+     */
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Aplicacion.main(args);
     }
 }
