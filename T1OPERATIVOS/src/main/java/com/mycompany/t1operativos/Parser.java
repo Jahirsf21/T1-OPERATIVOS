@@ -84,7 +84,11 @@ public class Parser {
         String operador = partesOperacion[0];
         String registro = partesOperacion[1];
         if (!operador.equals("MOV")) {
-            return "El operador \"" + operador + "\" no admite valor.";
+            if (validarOperadorSimple(operador)) {
+                return "El operador \"" + operador + "\" no admite valor.";
+            } else {
+                return "Operador desconocido: \"" + operador + "\". Operador válido: MOV.";
+            }
         }
         if (!validarRegistro(registro)) {
             return "Registro inválido: \"" + registro + "\". Registros válidos: AX, BX, CX, DX.";
