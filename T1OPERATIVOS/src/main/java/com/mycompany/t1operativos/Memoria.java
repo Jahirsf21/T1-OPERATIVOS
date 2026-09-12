@@ -11,7 +11,7 @@ import java.util.List;
  * @author deislher sánchez funez
  */
 public class Memoria {
-    private String[] memoria;
+    private String[][] memoria;
     private int tamañoTotal;
     private int tamañoKernel;
     private int inicioUsuario;
@@ -33,7 +33,7 @@ public class Memoria {
         }
         this.tamañoTotal = tamañoTotal;
         this.inicioUsuario = tamañoKernel;
-        this.memoria = new String[tamañoTotal];
+        this.memoria = new String[tamañoTotal][];
         this.cantidadInstrucciones = 0;
     }
 
@@ -43,7 +43,7 @@ public class Memoria {
      * @param instrucciones instrucciones que se desean almacenar en memoria.
      * @throws IllegalArgumentException si el programa supera la capacidad de la memoria de usuario.
      */
-    public void cargarPrograma(List<String> instrucciones) {
+    public void cargarPrograma(List<String[]> instrucciones) {
         int capacidadUsuario = tamañoTotal - inicioUsuario;
         if (instrucciones.size() > capacidadUsuario) {
             throw new IllegalArgumentException("El programa es demasiado grande para la memoria de usuario.");
@@ -63,7 +63,7 @@ public class Memoria {
      * @return el contenido de la posición, o {@code null} si está vacía.
      * @throws IndexOutOfBoundsException si la posición está fuera de la memoria.
      */
-    public String leer(int posicion) {
+    public String[] leer(int posicion) {
         validarDireccion(posicion);
         return memoria[posicion];
     }
