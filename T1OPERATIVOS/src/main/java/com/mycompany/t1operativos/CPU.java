@@ -31,13 +31,7 @@ public class CPU {
             throw new IllegalArgumentException("La memoria no puede ser nula.");
         }
         this.memoria = memoria;
-        this.pc = memoria.getInicioUsuario();
-        this.ir = null;
-        this.ac = 0;
-        this.ax = 0;
-        this.bx = 0;
-        this.cx = 0;
-        this.dx = 0;
+        reiniciar();
     }
 
     /**
@@ -76,7 +70,7 @@ public class CPU {
     private void buscarInstruccion() {
         String[] instruccion = memoria.leer(pc);
         if (instruccion == null) {
-            throw new IllegalStateException("No existe una instrucción en la posición" + pc + ".");
+            throw new IllegalStateException("No existe una instrucción en la posición " + pc + ".");
         }
         ir = instruccion.clone();
         pc++;

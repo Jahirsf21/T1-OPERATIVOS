@@ -71,7 +71,7 @@ public class Memoria {
      */
     public BCP leerBCP(int posicion) {
         if (posicion < 0 || posicion >= tamañoKernel) {
-            throw new IndexOutOfBoundsException("Posición invaálida del kernel: " + posicion);
+            throw new IndexOutOfBoundsException("Posición inválida del kernel: " + posicion);
         }
         return bcps[posicion];
     }

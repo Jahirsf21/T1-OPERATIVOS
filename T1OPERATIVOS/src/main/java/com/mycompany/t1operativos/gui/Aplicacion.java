@@ -22,7 +22,6 @@ public class Aplicacion extends JFrame {
     private JButton btnEjecutar;
     private JButton btnPasoAPaso;
     private JButton btnLimpiar;
-    private JButton btnEstadisticas;
     private JButton btnCargarArchivo;
 
     private JTable tablaInstrucciones;
@@ -57,7 +56,7 @@ public class Aplicacion extends JFrame {
 
     /**
      * Crea el panel superior de la ventana, compuesto por la fila de botones de
-     * acción (Ejecutar, Paso a paso, Limpiar, Estadísticas) y la fila del botón
+     * acción (Ejecutar, Paso a paso y Limpiar) y la fila del botón
      * para cargar archivos .asm.
      *
      * @return el panel superior ya construido con sus botones.
@@ -272,11 +271,6 @@ public class Aplicacion extends JFrame {
     /** @return el botón de Limpiar. */
     public JButton getBtnLimpiar() {
         return btnLimpiar;
-    }
-
-    /** @return el botón de Estadísticas. */
-    public JButton getBtnEstadisticas() {
-        return btnEstadisticas;
     }
 
    /** @return el botón de Cargar archivos. */
