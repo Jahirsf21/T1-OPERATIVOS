@@ -83,7 +83,7 @@ public class Aplicacion extends JFrame {
 
         JPanel panelMemoria = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
         panelMemoria.add(new JLabel("Memoria total:"));
-        selectorMemoria = new JSpinner(new SpinnerNumberModel(256, 128, 256, 4));
+        selectorMemoria = new JSpinner(new SpinnerNumberModel(256, 128, null, 4));
         JSpinner.DefaultEditor editorMemoria = (JSpinner.DefaultEditor) selectorMemoria.getEditor();
         editorMemoria.getTextField().setEditable(false);
         panelMemoria.add(selectorMemoria);
